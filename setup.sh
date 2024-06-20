@@ -8,8 +8,8 @@ install_debian() {
 
 # Function to install dependencies for Red Hat-based distributions
 install_redhat() {
-    sudo yum groupinstall -y "Development Tools"
-    sudo yum install -y dbus-devel gcc git libconfig-devel libdrm-devel libev-devel libX11-devel libX11-xcb libXext-devel libxcb-devel libGL-devel libEGL-devel libepoxy-devel meson ninja-build pcre2-devel pixman-devel uthash-devel xcb-util-image-devel xcb-util-renderutil-devel xorg-x11-proto-devel xcb-util-devel cmake
+    sudo dnf groupinstall -y "Development Tools"
+    sudo dnf install -y dbus-devel gcc git libconfig-devel libdrm-devel libev-devel libX11-devel libX11-xcb libXext-devel libxcb-devel libGL-devel libEGL-devel libepoxy-devel meson ninja-build pcre2-devel pixman-devel uthash-devel xcb-util-image-devel xcb-util-renderutil-devel xorg-x11-proto-devel xcb-util-devel cmake xorg-x11-server-devel imlib2-devel xorg-x11-driver
 }
 
 # Function to install dependencies for Arch-based distributions
@@ -26,7 +26,7 @@ if [ -f /etc/os-release ]; then
             echo "Detected Debian-based distribution"
             install_debian
             ;;
-        rhel|centos|fedora)
+        rhel|centos|fedora|nobara)
             echo "Detected Red Hat-based distribution"
             install_redhat
             ;;

@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int refresh_rate    = 60;     /* matches dwm's mouse event processing to your monitor's refresh rate for smoother window interactions */
+static const unsigned int refresh_rate    = 144;     /* matches dwm's mouse event processing to your monitor's refresh rate for smoother window interactions */
 static const unsigned int enable_noborder = 1;      /* toggles noborder feature (0=disabled, 1=enabled) */
 static const unsigned int borderpx        = 1;      /* border pixel of windows */
 static const unsigned int snap            = 26;     /* snap pixel */
@@ -17,17 +17,16 @@ static const int topbar                   = 1;      /* 0 means bottom bar */
 #define ICONSPACING                         5       /* space between icon and title */
 #define SHOWWINICON                         1       /* 0 means no winicon */
 static const char *fonts[]                = { "MesloLGS Nerd Font Mono:size=16", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  };
-static const char normbordercolor[]       = "#3B4252";
-static const char normbgcolor[]           = "#2E3440";
-static const char normfgcolor[]           = "#D8DEE9";
-static const char selbordercolor[]        = "#434C5E";
-static const char selbgcolor[]            = "#434C5E";
-static const char selfgcolor[]            = "#ECEFF4";
-
+static const char dmenufont[]       = "MesloLGS Nerd Font:size=16";
+static const char col_gray1[]       = "#2f2f2f";
+static const char col_gray2[]       = "#2f2f2f";
+static const char col_gray3[]       = "#cbcbcb";
+static const char col_gray4[]       = "#87ff5f";
+static const char col_cyan[]        = "#565656";
 static const char *colors[][3]      = {
-	/*               fg           bg           border   */
-	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel] =  { selfgcolor,  selbgcolor,  selbordercolor },
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_gray4  },
 };
 
 static const char *const autostart[] = {
@@ -35,12 +34,9 @@ static const char *const autostart[] = {
   "xset", "s", "noblank", NULL,
   "xset", "-dpms", NULL,
   "dbus-update-activation-environment", "--systemd", "--all", NULL,
-  "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1", NULL,
   "flameshot", NULL,
   "dunst", NULL,
   "picom", "--animations", "-b", NULL,
-  "sh", "-c", "feh --randomize --bg-fill /home/titus/Pictures/backgrounds/*", NULL,
-  "synergy", NULL,
   "slstatus", NULL,
   NULL /* terminate */
 };
@@ -88,17 +84,16 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define STATUSBAR "dwmblocks"
 /* commands */
-static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
+static const char *launchercmd[] = { "rofi", "-font", "MesloLGS Nerd Font 13", "-show", "drun", "-icon-theme", "Papirus", "-show-icons", NULL };
+
 static const char *termcmd[]  = { "kitty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function                argument */
-	{ MODKEY,                       XK_r,          spawn,                  {.v = launchercmd} },
+	{ MODKEY,                       XK_x,          spawn,                  {.v = launchercmd} },
 	{ MODKEY|ControlMask,           XK_r,          spawn,                  SHCMD ("protonrestart")},
-	{ MODKEY,                       XK_x,          spawn,                  {.v = termcmd } },
+	{ MODKEY,                       XK_Return,          spawn,                  {.v = termcmd } },
 	{ MODKEY,                       XK_b,          spawn,                  SHCMD ("xdg-open https://")},
-	{ MODKEY,                       XK_p,          spawn,                  SHCMD ("flameshot full -p /media/drive/Screenshots/")},
-	{ MODKEY|ShiftMask,             XK_p,          spawn,                  SHCMD ("flameshot gui -p /media/drive/Screenshots/")},
 	{ MODKEY|ControlMask,           XK_p,          spawn,                  SHCMD ("flameshot gui --clipboard")},
 	{ MODKEY,                       XK_e,          spawn,                  SHCMD ("thunar")},
 	{ MODKEY,                       XK_w,          spawn,                  SHCMD ("looking-glass-client -F")},
@@ -121,7 +116,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,          setcfact,               {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,          setcfact,               {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,          setcfact,               {.f =  0.00} },
-	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+	{ MODKEY|ShiftMask,                       XK_Return,     zoom,                   {0} },
 	{ MODKEY,                       XK_Tab,        view,                   {0} },
 	{ MODKEY,                       XK_q,          killclient,             {0} },
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
